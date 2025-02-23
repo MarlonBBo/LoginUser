@@ -1,5 +1,6 @@
 using LoginUser.Infra;
 using LoginUser.Repository.UserRepository;
+using LoginUser.Service;
 using LoginUser.Service.UserServices;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,7 @@ builder.Services.AddDbContext<ContextApp>(options =>
 });
 builder.Services.AddScoped<IUserInterface, UserRepository>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<BcryptService>();
 
 var app = builder.Build();
 

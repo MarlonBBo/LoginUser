@@ -1,4 +1,5 @@
-﻿using LoginUser.Model;
+﻿using LoginUser.DTO;
+using LoginUser.Model;
 
 namespace LoginUser.Repository.UserRepository
 {
@@ -7,5 +8,6 @@ namespace LoginUser.Repository.UserRepository
         Task<UserModel> CreateUser(UserModel user);
         Task<List<UserModel>> DeleteUser(int idUser);
         Task<List<UserModel>> List();
+        Task<UserModel> VeryfyUser(string email);
     }
 }

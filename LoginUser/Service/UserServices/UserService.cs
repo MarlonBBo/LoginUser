@@ -7,10 +7,27 @@ namespace LoginUser.Service.UserServices
     public class UserService
     {
         private readonly IUserInterface _userRepository;
+        private readonly BcryptService _bcryptService;
 
-        public UserService(IUserInterface userRepository)
+        public UserService(IUserInterface userRepository, BcryptService bcryptService)
         {
             _userRepository = userRepository;
+            _bcryptService = bcryptService;
+        }
+
+        public async Task<UserModel> Signin(UserSigninDTo userSigninDTo)
+        {
+            var bcryptService = new BcryptService();
+
+            var user = await _userRepository.VeryfyUser(userSigninDTo.Email) ?? throw new Exception("Usuário não cadastrado");
+            var compare = bcryptService.VerifyPassword(userSigninDTo.Password, user.Password);
+
+            if (compare == false)
+            {
+                throw new Exception("Credenciais erradas");
+            }
+
+            return user;
         }
 
         public async Task<string> Signup(UserDTO userDTO)
@@ -18,9 +35,9 @@ namespace LoginUser.Service.UserServices
             try
             {
 
-                var passwordService = new BcryptService();
+                var bcryptService = new BcryptService();
 
-                var password = passwordService.HashPassword(userDTO.Password);
+                var password = bcryptService.HashPassword(userDTO.Password);
 
                 var user = new UserModel()
                 {

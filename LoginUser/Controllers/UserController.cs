@@ -17,6 +17,20 @@ namespace LoginUser.Controllers
             _userService = userService;
         }
 
+        [HttpPost("Signin")]
+        public async Task<IActionResult> Signin([FromBody] UserSigninDTo userSignin)
+        {
+            try
+            {
+                var user = await _userService.Signin(userSignin);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(new { message = ex.Message });
+            }
+        }
+
         [HttpPost("Signup")]
         public async Task<string> Signup(UserDTO userDTO)
         {

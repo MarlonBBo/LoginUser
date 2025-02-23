@@ -1,4 +1,5 @@
-﻿using LoginUser.Infra;
+﻿using LoginUser.DTO;
+using LoginUser.Infra;
 using LoginUser.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -49,9 +50,22 @@ namespace LoginUser.Repository.UserRepository
         {
             try
             {
-                var users =  await _context.User.ToListAsync() ?? throw new InvalidOperationException("Não tem nenhum usuário no database!");
+                var users = await _context.User.ToListAsync() ?? throw new InvalidOperationException("Não tem nenhum usuário no database!");
 
-                return users; 
+                return users;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<UserModel> VeryfyUser(string email)
+        {
+            try
+            {
+                var compare = await _context.User.FirstOrDefaultAsync(a => a.Email == email) ?? throw new Exception("Usuário não registrado");
+                return compare;
             }
             catch (Exception ex)
             {
