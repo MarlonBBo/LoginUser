@@ -17,11 +17,16 @@ namespace LoginUser.Service.UserServices
         {
             try
             {
+
+                var passwordService = new BcryptService();
+
+                var password = passwordService.HashPassword(userDTO.Password);
+
                 var user = new UserModel()
                 {
                     Name = userDTO.Name,
                     Email = userDTO.Email,
-                    Password = userDTO.Password,
+                    Password = password
                 };
 
                 await _userRepository.CreateUser(user);
