@@ -13,7 +13,7 @@ namespace LoginUser.Service.UserServices
             _userRepository = userRepository;
         }
 
-        public async Task<UserModel> Signup(UserDTO userDTO)
+        public async Task<string> Signup(UserDTO userDTO)
         {
             try
             {
@@ -24,8 +24,8 @@ namespace LoginUser.Service.UserServices
                     Password = userDTO.Password,
                 };
 
-                var userCreate = await _userRepository.CreateUser(user);
-                return userCreate;
+                await _userRepository.CreateUser(user);
+                return "Usuário criado(UseService)";
             }
             catch (Exception ex)
             {
@@ -37,6 +37,12 @@ namespace LoginUser.Service.UserServices
         {
             var listUser = await _userRepository.List();
             return listUser;
+        }
+
+        public async Task<List<UserModel>> DeleteUser(int idUser)
+        {
+            var user = await _userRepository.DeleteUser(idUser);
+            return user;
         }
     }
 }

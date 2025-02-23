@@ -18,7 +18,7 @@ namespace LoginUser.Controllers
         }
 
         [HttpPost("Signup")]
-        public async Task<UserModel> Signup(UserDTO userDTO)
+        public async Task<string> Signup(UserDTO userDTO)
         {
             var user = await _userService.Signup(userDTO);
             return user;
@@ -29,6 +29,13 @@ namespace LoginUser.Controllers
         {
             var users = await _userService.List();
             return users;
+        }
+
+        [HttpDelete("DeleteUser")]
+        public async Task<List<UserModel>> DeleteUser(int idUser)
+        {
+            var user = await _userService.DeleteUser(idUser);
+            return user;
         }
     }
 }
