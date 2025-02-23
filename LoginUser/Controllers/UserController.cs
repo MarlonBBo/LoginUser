@@ -2,6 +2,7 @@
 using LoginUser.Model;
 using LoginUser.Repository.UserRepository;
 using LoginUser.Service.UserServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LoginUser.Controllers
@@ -22,8 +23,8 @@ namespace LoginUser.Controllers
         {
             try
             {
-                var user = await _userService.Signin(userSignin);
-                return Ok(user);
+                var token = await _userService.Signin(userSignin);
+                return Ok(new { Token = token });
             }
             catch (Exception ex)
             {
@@ -32,13 +33,14 @@ namespace LoginUser.Controllers
         }
 
         [HttpPost("Signup")]
-        public async Task<string> Signup(UserDTO userDTO)
+        public async Task<string> Signup([FromBody] UserDTO userDTO)
         {
             var user = await _userService.Signup(userDTO);
             return user;
         }
 
         [HttpGet("List")]
+        [Authorize]
         public async Task<List<UserModel>> List()
         {
             var users = await _userService.List();
