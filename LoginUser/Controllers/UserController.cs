@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LoginUser.Controllers
 {
     [ApiController]
-    [Route("/")]
+    [Route("/user")]
     public class UserController : ControllerBase
     {
         private readonly UserService _userService;

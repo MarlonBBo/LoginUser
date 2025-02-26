@@ -56,7 +56,6 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-app.Urls.Add("http://0.0.0.0:8080");
 
 if (app.Environment.IsDevelopment())
 {
@@ -64,11 +63,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapGet("/health", () => Results.Ok("Healthy"));
+
 app.MapControllers();
+
+app.Run("http://*:8000");
 
 app.Run();
