@@ -1,9 +1,8 @@
 # Base para execução
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
-ENV ASPNETCORE_URLS=http://+:80
+EXPOSE 8080
+ENV ASPNETCORE_URLS=http://+:8080
 
 # Build da aplicação
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build

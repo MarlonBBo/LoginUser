@@ -56,7 +56,8 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.Urls.Add("http://0.0.0.0:8080");
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
